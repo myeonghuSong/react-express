@@ -21,8 +21,8 @@ class Customer extends Component {
 }
 
 
-{/* <CustomerProfile id={this.props.id} image={this.props.image} name={this.props.name}/>
-// <CustomerInfo birthday={this.props.birthday} gender={this.props.gender} job={this.props.job} /> */}
+/* <CustomerProfile id={this.props.id} image={this.props.image} name={this.props.name}/>
+// <CustomerInfo birthday={this.props.birthday} gender={this.props.gender} job={this.props.job} /> */
 // class CustomerProfile extends Component {
 //     render() {
 //         return(
