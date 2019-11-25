@@ -1,37 +1,32 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
+const fs = require('fs');
+const mysql = require('mysql');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const data = fs.readFileSync('./database.json');
+const conf = JSON.parse(data);
+
+const connection = mysql.createConnection({
+  host: conf.host,
+  user: conf.user,
+  password: conf.password,
+  port: conf.port,
+  database: conf.database
+});
+
+connection.connect();
+
 app.get('/api/customers', (req, res) => {
-    res.send([
-        {
-          'id': 1,
-          'image': 'https://placeimg.com/64/64/any',
-          'name': '홍길동',
-          'birthday': '940811',
-          'gender': '남자',
-          'job': '취준생'
-        },
-        {
-          'id': 2,
-          'image': 'https://placeimg.com/64/64/1',
-          'name': '동홍길',
-          'birthday': '910811',
-          'gender': '여자',
-          'job': '프로그래머'
-        },
-        {
-          'id': 3,
-          'image': 'https://placeimg.com/64/64/2',
-          'name': '길동홍',
-          'birthday': '920811',
-          'gender': '남자',
-          'job': '디자이너'
-        },
-      ])
+    connection.query(
+      "SELECT * FROM CUSTOMER",
+      (err, rows, fields) => {
+        res.send(rows);
+      }
+    )
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
